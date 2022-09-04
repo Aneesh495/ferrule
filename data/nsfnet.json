@@ -1,0 +1,42 @@
+{
+  "name": "NSFNET-14",
+  "nodes": [
+    {"id": "SEA", "degree": 3, "switch_loss_db": 3.5},
+    {"id": "SCL", "degree": 3, "switch_loss_db": 3.5},
+    {"id": "SLC", "degree": 3, "switch_loss_db": 3.5},
+    {"id": "DEN", "degree": 3, "switch_loss_db": 3.5},
+    {"id": "HOU", "degree": 3, "switch_loss_db": 3.5},
+    {"id": "KAN", "degree": 4, "switch_loss_db": 3.5},
+    {"id": "NEB", "degree": 2, "switch_loss_db": 3.5},
+    {"id": "CHI", "degree": 3, "switch_loss_db": 3.5},
+    {"id": "CLE", "degree": 4, "switch_loss_db": 3.5},
+    {"id": "ATL", "degree": 3, "switch_loss_db": 3.5},
+    {"id": "PIT", "degree": 3, "switch_loss_db": 3.5},
+    {"id": "NYK", "degree": 3, "switch_loss_db": 3.5},
+    {"id": "BOS", "degree": 2, "switch_loss_db": 3.5},
+    {"id": "WDC", "degree": 3, "switch_loss_db": 3.5}
+  ],
+  "links": [
+    {"id": "L01", "src": "SEA", "tgt": "SCL", "length_km": 800.0, "srlgs": [1]},
+    {"id": "L02", "src": "SEA", "tgt": "SLC", "length_km": 1100.0, "srlgs": [2]},
+    {"id": "L03", "src": "SCL", "tgt": "SLC", "length_km": 900.0, "srlgs": [3]},
+    {"id": "L04", "src": "SCL", "tgt": "DEN", "length_km": 1400.0, "srlgs": [4]},
+    {"id": "L05", "src": "SLC", "tgt": "DEN", "length_km": 650.0, "srlgs": [5]},
+    {"id": "L06", "src": "SLC", "tgt": "HOU", "length_km": 1800.0, "srlgs": [6]},
+    {"id": "L07", "src": "DEN", "tgt": "KAN", "length_km": 850.0, "srlgs": [7]},
+    {"id": "L08", "src": "HOU", "tgt": "KAN", "length_km": 1050.0, "srlgs": [8]},
+    {"id": "L09", "src": "HOU", "tgt": "ATL", "length_km": 1150.0, "srlgs": [9]},
+    {"id": "L10", "src": "KAN", "tgt": "NEB", "length_km": 450.0, "srlgs": [10]},
+    {"id": "L11", "src": "KAN", "tgt": "PIT", "length_km": 1200.0, "srlgs": [11]},
+    {"id": "L12", "src": "NEB", "tgt": "CHI", "length_km": 750.0, "srlgs": [12]},
+    {"id": "L13", "src": "CHI", "tgt": "CLE", "length_km": 500.0, "srlgs": [13]},
+    {"id": "L14", "src": "CHI", "tgt": "ATL", "length_km": 1000.0, "srlgs": [14]},
+    {"id": "L15", "src": "CLE", "tgt": "PIT", "length_km": 250.0, "srlgs": [15]},
+    {"id": "L16", "src": "CLE", "tgt": "NYK", "length_km": 700.0, "srlgs": [16]},
+    {"id": "L17", "src": "CLE", "tgt": "BOS", "length_km": 900.0, "srlgs": [17]},
+    {"id": "L18", "src": "ATL", "tgt": "WDC", "length_km": 850.0, "srlgs": [18]},
+    {"id": "L19", "src": "PIT", "tgt": "WDC", "length_km": 350.0, "srlgs": [19]},
+    {"id": "L20", "src": "NYK", "tgt": "BOS", "length_km": 300.0, "srlgs": [20]},
+    {"id": "L21", "src": "NYK", "tgt": "WDC", "length_km": 350.0, "srlgs": [21]}
+  ]
+}

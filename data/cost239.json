@@ -1,0 +1,36 @@
+{
+  "name": "COST-239",
+  "nodes": [
+    {"id": "AMS", "degree": 4, "switch_loss_db": 3.2},
+    {"id": "BER", "degree": 3, "switch_loss_db": 3.2},
+    {"id": "BRU", "degree": 4, "switch_loss_db": 3.2},
+    {"id": "COP", "degree": 2, "switch_loss_db": 3.2},
+    {"id": "LON", "degree": 3, "switch_loss_db": 3.2},
+    {"id": "LUX", "degree": 3, "switch_loss_db": 3.2},
+    {"id": "MAD", "degree": 2, "switch_loss_db": 3.2},
+    {"id": "MIL", "degree": 4, "switch_loss_db": 3.2},
+    {"id": "PAR", "degree": 5, "switch_loss_db": 3.2},
+    {"id": "PRA", "degree": 3, "switch_loss_db": 3.2},
+    {"id": "ZUR", "degree": 3, "switch_loss_db": 3.2}
+  ],
+  "links": [
+    {"id": "E01", "src": "LON", "tgt": "PAR", "length_km": 340.0, "srlgs": [101]},
+    {"id": "E02", "src": "LON", "tgt": "BRU", "length_km": 320.0, "srlgs": [102]},
+    {"id": "E03", "src": "LON", "tgt": "AMS", "length_km": 360.0, "srlgs": [103]},
+    {"id": "E04", "src": "PAR", "tgt": "BRU", "length_km": 280.0, "srlgs": [104]},
+    {"id": "E05", "src": "PAR", "tgt": "LUX", "length_km": 310.0, "srlgs": [105]},
+    {"id": "E06", "src": "PAR", "tgt": "MAD", "length_km": 1050.0, "srlgs": [106]},
+    {"id": "E07", "src": "PAR", "tgt": "MIL", "length_km": 640.0, "srlgs": [107]},
+    {"id": "E08", "src": "BRU", "tgt": "AMS", "length_km": 170.0, "srlgs": [108]},
+    {"id": "E09", "src": "BRU", "tgt": "LUX", "length_km": 190.0, "srlgs": [109]},
+    {"id": "E10", "src": "AMS", "tgt": "COP", "length_km": 620.0, "srlgs": [110]},
+    {"id": "E11", "src": "AMS", "tgt": "BER", "length_km": 580.0, "srlgs": [111]},
+    {"id": "E12", "src": "LUX", "tgt": "ZUR", "length_km": 300.0, "srlgs": [112]},
+    {"id": "E13", "src": "ZUR", "tgt": "MIL", "length_km": 220.0, "srlgs": [113]},
+    {"id": "E14", "src": "ZUR", "tgt": "PRA", "length_km": 510.0, "srlgs": [114]},
+    {"id": "E15", "src": "BER", "tgt": "COP", "length_km": 350.0, "srlgs": [115]},
+    {"id": "E16", "src": "BER", "tgt": "PRA", "length_km": 280.0, "srlgs": [116]},
+    {"id": "E17", "src": "MAD", "tgt": "MIL", "length_km": 1180.0, "srlgs": [117]},
+    {"id": "E18", "src": "MIL", "tgt": "PRA", "length_km": 650.0, "srlgs": [118]}
+  ]
+}
