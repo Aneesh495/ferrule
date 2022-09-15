@@ -42,7 +42,7 @@ class OpticalPhysicsBridge:
         return (1.0 - math.exp(-alpha * length_km)) / alpha
 
     @staticmethod
-    def gn_model_nli_psd(
+    def gn_model_nli_power_watts(
         length_km: float,
         attenuation_db_per_km: float,
         dispersion_ps_nm_km: float,
@@ -51,26 +51,24 @@ class OpticalPhysicsBridge:
         channel_bw_ghz: float,
         wavelength_nm: float = 1550.0
     ) -> float:
-        """Evaluates analytical Gaussian Noise model NLI spectral density."""
-        gamma = nonlinear_1_w_km * 1e-3
-        alpha = (attenuation_db_per_km / 10.0) * math.log(10.0) * 1e-3
+        """Evaluates single-span nonlinear interference power P_NLI (Watts) via analytical GN model."""
+        gamma = nonlinear_1_w_km * 1e-3                         # 1 / (W * m)
+        alpha = (attenuation_db_per_km / 10.0) * math.log(10.0) * 1e-3  # 1 / m
         c_mps = SPEED_OF_LIGHT_MPS
         lambda_m = wavelength_nm * 1e-9
-        disp_m = dispersion_ps_nm_km * 1e-6
-        beta2_m = abs(((lambda_m * lambda_m) / (2.0 * math.pi * c_mps)) * disp_m)
+        disp_m = dispersion_ps_nm_km * 1e-6                     # s / m^2
+        beta2_m = abs(((lambda_m * lambda_m) / (2.0 * math.pi * c_mps)) * disp_m)  # s^2 / m
 
         bw_hz = channel_bw_ghz * 1e9
-        psd_tx = launch_power_watts / bw_hz
-        leff_m = OpticalPhysicsBridge.span_effective_length_km(length_km, attenuation_db_per_km) * 1000.0
+        arg = (math.pi * math.pi / 2.0) * (beta2_m / alpha) * (bw_hz * bw_hz)
+        asinh_term = math.asinh(max(arg, 1e-12))
 
-        prefactor = (8.0 / 27.0) * (gamma * gamma) * (psd_tx ** 3) * (leff_m * leff_m)
-        denom = 2.0 * math.pi * alpha * beta2_m
+        denom = math.pi * alpha * beta2_m * (bw_hz * bw_hz)
         if denom <= 0:
             return 0.0
 
-        arg = (math.pi * math.pi / 2.0) * (beta2_m / alpha) * (bw_hz * bw_hz)
-        asinh_term = math.asinh(arg)
-        return (prefactor / denom) * asinh_term
+        eta = (8.0 / 27.0) * (gamma * gamma / denom) * asinh_term
+        return eta * (launch_power_watts ** 3)
 
     @staticmethod
     def cascaded_osnr_db(
@@ -103,15 +101,14 @@ class OpticalPhysicsBridge:
         osnr_ase = OpticalPhysicsBridge.cascaded_osnr_db(launch_power_dbm, avg_span_len, num_spans)
         
         launch_watts = OpticalPhysicsBridge.dbm_to_watts(launch_power_dbm)
-        nli_psd = OpticalPhysicsBridge.gn_model_nli_psd(
+        single_nli_watts = OpticalPhysicsBridge.gn_model_nli_power_watts(
             avg_span_len, 0.20, 16.7, 1.3, launch_watts, 50.0
         )
-        single_nli_watts = nli_psd * 50.0e9
         total_nli_watts = (num_spans ** 1.05) * single_nli_watts
         snr_nli = OpticalPhysicsBridge.linear_to_db(launch_watts / max(total_nli_watts, 1e-30))
 
         inv_gsnr = (1.0 / OpticalPhysicsBridge.db_to_linear(osnr_ase)) + (1.0 / OpticalPhysicsBridge.db_to_linear(snr_nli))
-        raw_gsnr = OpticalPhysicsBridge.linear_to_db(1.0 / inv_gsnr)
+        raw_gsnr = OpticalPhysicsBridge.linear_to_db(1.0 / max(inv_gsnr, 1e-30))
         roadm_penalty = num_roadms * 0.15
         return max(raw_gsnr - roadm_penalty, 0.0)
 
